@@ -1,16 +1,17 @@
 import UIKit
+import SDWebImage
 
-public protocol LightboxControllerPageDelegate: class {
+public protocol LightboxControllerPageDelegate: AnyObject {
 
   func lightboxController(_ controller: LightboxController, didMoveToPage page: Int)
 }
 
-public protocol LightboxControllerDismissalDelegate: class {
+public protocol LightboxControllerDismissalDelegate: AnyObject {
 
   func lightboxControllerWillDismiss(_ controller: LightboxController)
 }
 
-public protocol LightboxControllerTouchDelegate: class {
+public protocol LightboxControllerTouchDelegate: AnyObject {
 
   func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
 }
@@ -44,8 +45,8 @@ open class LightboxController: UIViewController {
     return view
   }()
 
-  lazy var backgroundView: UIImageView = {
-    let view = UIImageView()
+  lazy var backgroundView: SDAnimatedImageView = {
+    let view = SDAnimatedImageView()
     view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
     return view
@@ -185,14 +186,6 @@ open class LightboxController: UIViewController {
     goTo(initialPage, animated: false)
   }
 
-  open override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    if !presented {
-      presented = true
-      configureLayout(view.bounds.size)
-    }
-  }
-
   open override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
@@ -213,6 +206,11 @@ open class LightboxController: UIViewController {
       width: view.bounds.width,
       height: 100
     )
+    
+    if !presented {
+      presented = true
+      configureLayout(view.bounds.size)
+    }
   }
 
   open override var prefersStatusBarHidden: Bool {
@@ -386,7 +384,7 @@ extension LightboxController: UIScrollViewDelegate {
 
 extension LightboxController: PageViewDelegate {
 
-  func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView) {
+  func remoteImageDidLoad(_ image: UIImage?, imageView: SDAnimatedImageView) {
     guard let image = image, dynamicBackground else {
       return
     }
@@ -423,39 +421,15 @@ extension LightboxController: PageViewDelegate {
 extension LightboxController: HeaderViewDelegate {
 
   func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton) {
-      
+    
+     // save selected pic
       let Index = currentPage
       if let url = images[Index].imageURL,
       let data = try? Data(contentsOf: url),
       let image = UIImage(data: data) {
       UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
       }
-      
-
-//    deleteButton.isEnabled = false
-//
-//    guard numberOfPages != 1 else {
-//      pageViews.removeAll()
-//      self.headerView(headerView, didPressCloseButton: headerView.closeButton)
-//      return
-//    }
-//
-//    let prevIndex = currentPage
-//
-//    if currentPage == numberOfPages - 1 {
-//      previous()
-//    } else {
-//      next()
-//      currentPage -= 1
-//    }
-//
-//    self.pageViews.remove(at: prevIndex).removeFromSuperview()
-//
-//    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-//      self.configureLayout(self.view.bounds.size)
-//      self.currentPage = Int(self.scrollView.contentOffset.x / self.view.bounds.width)
-//      deleteButton.isEnabled = true
-//    }
+    
   }
 
   func headerView(_ headerView: HeaderView, didPressCloseButton closeButton: UIButton) {
