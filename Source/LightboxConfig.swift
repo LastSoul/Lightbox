@@ -3,6 +3,7 @@ import AVKit
 import AVFoundation
 import SDWebImage
 
+
 public class LightboxConfig {
   /// Whether to show status bar while Lightbox is presented
   public static var hideStatusBar = true
