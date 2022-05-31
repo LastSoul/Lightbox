@@ -430,6 +430,10 @@ extension LightboxController: HeaderViewDelegate {
       UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
       }
     
+      let alert = UIAlertController(title: nil, message: "تم الحفظ", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "الغاء", style: .cancel))
+      self.present(alert, animated: true, completion: nil)
+    
   }
 
   func headerView(_ headerView: HeaderView, didPressCloseButton closeButton: UIButton) {
