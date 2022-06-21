@@ -1,5 +1,6 @@
 import UIKit
 import SDWebImage
+import Photos
 
 public protocol LightboxControllerPageDelegate: AnyObject {
 
@@ -423,18 +424,37 @@ extension LightboxController: HeaderViewDelegate {
   func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton) {
     
      // save selected pic
-      let Index = currentPage
-      if let url = images[Index].imageURL,
-      let data = try? Data(contentsOf: url),
-      let image = UIImage(data: data) {
-      UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-      }
-    
-      let alert = UIAlertController(title: nil, message: "تم الحفظ", preferredStyle: .alert)
-      alert.addAction(UIAlertAction(title: "الغاء", style: .cancel))
-      self.present(alert, animated: true, completion: nil)
+          PHPhotoLibrary.requestAuthorization({
+               (newStatus) in
+                 if newStatus ==  PHAuthorizationStatus.authorized {
+                     
+                     let Index = currentPage
+                     if let url = images[Index].imageURL,
+                     let data = try? Data(contentsOf: url),
+                     let image = UIImage(data: data) {
+                        UIImageWriteToSavedPhotosAlbum(image, self, #selector(savedImage), nil)
+                     }
+                  
+                 }else if newStatus == PHAuthorizationStatus.denied {
+                     
+                     let alertController = UIAlertController(title: "", message: "يتطلب صلاحيه من اجل حفظ الصور", preferredStyle: .alert)
+                     let OKAction = UIAlertAction(title: "الغاء", style: .cancel)
+                     alertController.addAction(OKAction)
+                     self.present(alertController, animated: true, completion: nil)
+                 }
+        })
     
   }
+  
+   @objc func savedImage(_ im:UIImage, error:Error?, context:UnsafeMutableRawPointer?) {
+        if let err = error {
+            print(err)
+            return
+        }
+        let alert = UIAlertController(title: nil, message: "تم الحفظ", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "الغاء", style: .cancel))
+        self.present(alert, animated: true, completion: nil)
+    }
 
   func headerView(_ headerView: HeaderView, didPressCloseButton closeButton: UIButton) {
     closeButton.isEnabled = false
