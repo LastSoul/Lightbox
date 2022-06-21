@@ -424,15 +424,15 @@ extension LightboxController: HeaderViewDelegate {
   func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton) {
     
      // save selected pic
-          PHPhotoLibrary.requestAuthorization({
+              PHPhotoLibrary.requestAuthorization({ [self]
                (newStatus) in
                  if newStatus ==  PHAuthorizationStatus.authorized {
                      
-                     let Index = currentPage
-                     if let url = images[Index].imageURL,
+                     let Index = self.currentPage
+                     if let url = self.images[Index].imageURL,
                      let data = try? Data(contentsOf: url),
                      let image = UIImage(data: data) {
-                        UIImageWriteToSavedPhotosAlbum(image, self, #selector(savedImage), nil)
+                         UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.savedImage), nil)
                      }
                   
                  }else if newStatus == PHAuthorizationStatus.denied {
