@@ -436,11 +436,13 @@ extension LightboxController: HeaderViewDelegate {
                      }
                   
                  }else if newStatus == PHAuthorizationStatus.denied {
-                     
+                     DispatchQueue.main.async {
                      let alertController = UIAlertController(title: "", message: "يتطلب صلاحيه من اجل حفظ الصور", preferredStyle: .alert)
                      let OKAction = UIAlertAction(title: "الغاء", style: .cancel)
                      alertController.addAction(OKAction)
                      self.present(alertController, animated: true, completion: nil)
+                        
+                    }
                  }
         })
     
