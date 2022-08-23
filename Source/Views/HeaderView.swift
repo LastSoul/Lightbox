@@ -79,7 +79,7 @@ open class HeaderView: UIView {
 
     backgroundColor = UIColor.clear
       
-      if #available(iOS 13.0, *) {
+      if #available(iOS 14.0, *) {
           let imageView = UIImage(systemName: "square.and.arrow.down")?.withTintColor(.white,
                                                                                       renderingMode: .alwaysTemplate)
           
