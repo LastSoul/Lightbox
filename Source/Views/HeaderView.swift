@@ -29,12 +29,16 @@ open class HeaderView: UIView {
     }
 
     button.isHidden = !LightboxConfig.CloseButton.enabled
-      if #available(iOS 13.0, *) {
-          button.setImage(UIImage(systemName: "arrow.left"), for: .normal)
-      } else {
-          // Fallback on earlier versions
+      if #available(iOS 14.0, *) {
+          button.setImage(UIImage(systemName: "arrow.left")?.withTintColor(.white,
+                                                                           renderingMode: .alwaysTemplate), for: .normal)
+          
+          button.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+          button.layer.cornerRadius = button.frame.size.height/2
+          button.layer.masksToBounds = true
       }
 
+      
     return button
   }()
 
@@ -61,10 +65,14 @@ open class HeaderView: UIView {
     }
 
     button.isHidden = !LightboxConfig.DeleteButton.enabled
-      if #available(iOS 13.0, *) {
-          button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
-      } else {
-          // Fallback on earlier versions
+      if #available(iOS 14.0, *) {
+          button.setImage(UIImage(systemName: "ellipsis")?.withTintColor(.white,
+                                                                         renderingMode: .alwaysTemplate), for: .normal)
+          
+          button.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+          button.layer.cornerRadius = button.frame.size.height/2
+          button.layer.masksToBounds = true
+
       }
 
     return button
