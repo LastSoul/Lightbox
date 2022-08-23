@@ -167,6 +167,8 @@ open class LightboxController: UIViewController {
 
   open override func viewDidLoad() {
     super.viewDidLoad()
+    
+    self.contentView.semanticContentAttribute = .forceRightToLeft
 
     // 9 July 2020: @3lvis
     // Lightbox hasn't been optimized to be used in presentation styles other than fullscreen.
