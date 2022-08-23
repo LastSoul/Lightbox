@@ -13,7 +13,7 @@ open class HeaderView: UIView {
 
     let button = UIButton(type: .system)
 
-    button.setAttributedTitle(title, for: UIControl.State())
+    // button.setAttributedTitle(title, for: UIControl.State())
 
     if let size = LightboxConfig.CloseButton.size {
       button.frame.size = size
@@ -29,6 +29,7 @@ open class HeaderView: UIView {
     }
 
     button.isHidden = !LightboxConfig.CloseButton.enabled
+    button.setImage(UIImage(systemName: "arrow.left"), for: .normal)
 
     return button
   }()
@@ -40,7 +41,7 @@ open class HeaderView: UIView {
 
     let button = UIButton(type: .system)
 
-    button.setAttributedTitle(title, for: .normal)
+   // button.setAttributedTitle(title, for: .normal)
 
     if let size = LightboxConfig.DeleteButton.size {
       button.frame.size = size
@@ -48,14 +49,15 @@ open class HeaderView: UIView {
       button.sizeToFit()
     }
 
-    button.addTarget(self, action: #selector(deleteButtonDidPress(_:)),
-      for: .touchUpInside)
+//    button.addTarget(self, action: #selector(deleteButtonDidPress(_:)),
+//      for: .touchUpInside)
 
     if let image = LightboxConfig.DeleteButton.image {
         button.setBackgroundImage(image, for: UIControl.State())
     }
 
     button.isHidden = !LightboxConfig.DeleteButton.enabled
+    button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
 
     return button
   }()
@@ -68,6 +70,14 @@ open class HeaderView: UIView {
     super.init(frame: CGRect.zero)
 
     backgroundColor = UIColor.clear
+      
+      let imageView = UIImage(systemName: "square.and.arrow.down")?.withTintColor(.white,
+                                                                                  renderingMode: .alwaysTemplate)
+      let save = UIAction(title: "حفظ",image: imageView) { _ in
+          self.delegate?.headerView(self, didPressDeleteButton: self.deleteButton)
+      }
+      deleteButton.showsMenuAsPrimaryAction = true
+      deleteButton.menu = UIMenu(title: "", children: [save])
 
     [deleteButton , closeButton ].forEach { addSubview($0) }
   }
