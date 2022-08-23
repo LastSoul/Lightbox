@@ -29,7 +29,11 @@ open class HeaderView: UIView {
     }
 
     button.isHidden = !LightboxConfig.CloseButton.enabled
-    button.setImage(UIImage(systemName: "arrow.left"), for: .normal)
+      if #available(iOS 13.0, *) {
+          button.setImage(UIImage(systemName: "arrow.left"), for: .normal)
+      } else {
+          // Fallback on earlier versions
+      }
 
     return button
   }()
@@ -57,7 +61,11 @@ open class HeaderView: UIView {
     }
 
     button.isHidden = !LightboxConfig.DeleteButton.enabled
-    button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+      if #available(iOS 13.0, *) {
+          button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+      } else {
+          // Fallback on earlier versions
+      }
 
     return button
   }()
@@ -71,13 +79,17 @@ open class HeaderView: UIView {
 
     backgroundColor = UIColor.clear
       
-      let imageView = UIImage(systemName: "square.and.arrow.down")?.withTintColor(.white,
-                                                                                  renderingMode: .alwaysTemplate)
-      let save = UIAction(title: "حفظ",image: imageView) { _ in
-          self.delegate?.headerView(self, didPressDeleteButton: self.deleteButton)
+      if #available(iOS 13.0, *) {
+          let imageView = UIImage(systemName: "square.and.arrow.down")?.withTintColor(.white,
+                                                                                      renderingMode: .alwaysTemplate)
+          
+          let save = UIAction(title: "حفظ",image: imageView) { _ in
+              self.delegate?.headerView(self, didPressDeleteButton: self.deleteButton)
+          }
+          deleteButton.showsMenuAsPrimaryAction = true
+          deleteButton.menu = UIMenu(title: "", children: [save])
       }
-      deleteButton.showsMenuAsPrimaryAction = true
-      deleteButton.menu = UIMenu(title: "", children: [save])
+     
 
     [deleteButton , closeButton ].forEach { addSubview($0) }
   }
