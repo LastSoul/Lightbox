@@ -36,6 +36,8 @@ open class HeaderView: UIView {
           button.backgroundColor = UIColor.black.withAlphaComponent(0.6)
           button.layer.cornerRadius = button.frame.size.height/2
           button.layer.masksToBounds = true
+          button.tintColor = .white
+
       }
 
       
@@ -72,6 +74,7 @@ open class HeaderView: UIView {
           button.backgroundColor = UIColor.black.withAlphaComponent(0.6)
           button.layer.cornerRadius = button.frame.size.height/2
           button.layer.masksToBounds = true
+          button.tintColor = .white
 
       }
 
