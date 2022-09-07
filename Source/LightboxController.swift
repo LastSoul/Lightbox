@@ -21,7 +21,7 @@ open class LightboxController: UIViewController {
 
   // MARK: - Internal views
 
-  lazy var scrollView: UIScrollView = { [unowned self] in
+    open lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView()
     scrollView.isPagingEnabled = false
     scrollView.delegate = self
