@@ -115,7 +115,7 @@ open class PageView: UIScrollView {
 
   // MARK: - Fetch
   private func fetchImage () {
-    loadingIndicator.alpha = 1
+  //  loadingIndicator.alpha = 1
     self.image.addImageTo(imageView) { [weak self] image in
       guard let self = self else {
         return
@@ -125,9 +125,9 @@ open class PageView: UIScrollView {
       self.configureImageView()
       self.pageViewDelegate?.remoteImageDidLoad(image, imageView: self.imageView)
 
-      UIView.animate(withDuration: 0.4) {
-        self.loadingIndicator.alpha = 0
-      }
+//      UIView.animate(withDuration: 0.4) {
+//        self.loadingIndicator.alpha = 0
+//      }
     }
   }
 
