@@ -145,7 +145,7 @@ open class LightboxController: UIViewController {
   open fileprivate(set) var seen = false
 
   lazy var transitionManager: LightboxTransition = LightboxTransition()
-  var pageViews = [PageView]()
+  open var pageViews = [PageView]()
   var statusBarHidden = false
 
   fileprivate var initialImages: [LightboxImage]
