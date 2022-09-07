@@ -67,7 +67,7 @@ open class PageView: UIScrollView {
     fetchImage()
   }
 
-  required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
@@ -155,7 +155,7 @@ open class PageView: UIScrollView {
 
   // MARK: - Layout
 
-  override func layoutSubviews() {
+    open override func layoutSubviews() {
     super.layoutSubviews()
 
     loadingIndicator.center = imageView.center
@@ -233,11 +233,11 @@ extension PageView: LayoutConfigurable {
 
 extension PageView: UIScrollViewDelegate {
 
-  func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
     return imageView
   }
 
-  func scrollViewDidZoom(_ scrollView: UIScrollView) {
+    public func scrollViewDidZoom(_ scrollView: UIScrollView) {
     centerImageView()
     pageViewDelegate?.pageViewDidZoom(self)
   }
