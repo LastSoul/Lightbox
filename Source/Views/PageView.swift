@@ -9,7 +9,7 @@ protocol PageViewDelegate: AnyObject {
   func pageViewDidTouch(_ pageView: PageView)
 }
 
-class PageView: UIScrollView {
+open class PageView: UIScrollView {
 
   open lazy var imageView: SDAnimatedImageView = {
     let imageView = SDAnimatedImageView()
