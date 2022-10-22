@@ -489,7 +489,7 @@ extension LightboxController: HeaderViewDelegate {
                         kunaiuimageView.center = CGPoint(x: sView.bounds.minX + kunaiuimageView.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height - 40)
                         label.center = CGPoint(x: sView.bounds.minX + label.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height + label.frame.height)
                        // label2.center = CGPoint(x: sView.bounds.minX + label.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height + label2.frame.height + 35)
-                        label2.frame = CGRect(x:  sView.bounds.minX + 10, y: sView.bounds.maxY - kunaiuimageView.frame.height + label2.frame.height + 45, width: 300, height: 30)
+                        label2.frame = CGRect(x:  sView.bounds.minX + 20, y: sView.bounds.maxY - kunaiuimageView.frame.height + label2.frame.height + 50, width: 300, height: 30)
                         
                         UIGraphicsBeginImageContextWithOptions(sView.frame.size, true, 0.0)
                         if let context = UIGraphicsGetCurrentContext() { sView.layer.render(in: context) }
