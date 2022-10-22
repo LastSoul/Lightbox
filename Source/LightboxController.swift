@@ -486,14 +486,9 @@ extension LightboxController: HeaderViewDelegate {
                         sView.addSubview(label)
                         sView.addSubview(label2)
                         
-                        let minx = sView.bounds.minX
-                        let minY = sView.bounds.minY
-                        let maxX = sView.bounds.maxX
-                        let maxY = sView.bounds.maxY
-                        
                         kunaiuimageView.center = CGPoint(x: sView.bounds.minX + kunaiuimageView.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height - 40)
                         label.center = CGPoint(x: sView.bounds.minX + label.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height + label.frame.height)
-                        label2.center = CGPoint(x: sView.bounds.minX + label2.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height + label2.frame.height + 35)
+                        label2.center = CGPoint(x: sView.bounds.minX + label.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height + label2.frame.height + 35)
                         
                         
                         UIGraphicsBeginImageContextWithOptions(sView.frame.size, true, 0.0)
