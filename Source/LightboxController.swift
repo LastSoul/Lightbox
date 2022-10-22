@@ -470,7 +470,7 @@ extension LightboxController: HeaderViewDelegate {
                         label2.font = UIFont.boldSystemFont(ofSize: 26)
                         label2.textAlignment = .left
                         label2.textColor = UIColor.gray
-                        label2.frame = CGRect(x: 0, y: 0, width: 300, height: 30)
+                      //  label2.frame = CGRect(x: 0, y: 0, width: 300, height: 30)
                         //        label2.layer.shadowColor = UIColor.black.cgColor
                         //        label2.layer.shadowOpacity = 1
                         //        label2.layer.shadowOffset = CGSize.zero
@@ -488,8 +488,8 @@ extension LightboxController: HeaderViewDelegate {
                         
                         kunaiuimageView.center = CGPoint(x: sView.bounds.minX + kunaiuimageView.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height - 40)
                         label.center = CGPoint(x: sView.bounds.minX + label.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height + label.frame.height)
-                        label2.center = CGPoint(x: sView.bounds.minX + label.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height + label2.frame.height + 35)
-                        
+                       // label2.center = CGPoint(x: sView.bounds.minX + label.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height + label2.frame.height + 35)
+                        label2.frame = CGRect(x:  sView.bounds.minX + label.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height + label2.frame.height + 35, width: 300, height: 30)
                         
                         UIGraphicsBeginImageContextWithOptions(sView.frame.size, true, 0.0)
                         if let context = UIGraphicsGetCurrentContext() { sView.layer.render(in: context) }
