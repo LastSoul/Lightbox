@@ -421,32 +421,109 @@ extension LightboxController: PageViewDelegate {
 
 extension LightboxController: HeaderViewDelegate {
 
-  func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton) {
-    
-     // save selected pic
-              PHPhotoLibrary.requestAuthorization({ [self]
-               (newStatus) in
-                 if newStatus ==  PHAuthorizationStatus.authorized {
-                     
-                     let Index = self.currentPage
-                     if let url = self.images[Index].imageURL,
-                     let data = try? Data(contentsOf: url),
-                     let image = UIImage(data: data) {
-                         UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.savedImage), nil)
-                     }
-                  
-                 }else if newStatus == PHAuthorizationStatus.denied {
-                     DispatchQueue.main.async {
-                     let alertController = UIAlertController(title: "", message: "يتطلب صلاحيه من اجل حفظ الصور", preferredStyle: .alert)
-                     let OKAction = UIAlertAction(title: "الغاء", style: .cancel)
-                     alertController.addAction(OKAction)
-                     self.present(alertController, animated: true, completion: nil)
-                        
+    func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton) {
+        
+        // save selected pic
+        PHPhotoLibrary.requestAuthorization({ [self]
+            (newStatus) in
+            if newStatus ==  PHAuthorizationStatus.authorized {
+                
+                if LightboxConfig.isDrawing {
+                    let Index = self.currentPage
+                    guard let url = self.images[Index].imageURL else {return}
+                    guard let data = NSData(contentsOf: url as URL) else {return}
+                    guard let uiimage = UIImage(data: data as Data) else {return}
+                    
+                    
+                    let imageView = UIImageView(image: uiimage)
+                    imageView.translatesAutoresizingMaskIntoConstraints = false
+                    
+                    guard let logo = LightboxConfig.logoImage else {return}
+                    
+                    let kunaiuimageView = UIImageView(image: logo)
+                    kunaiuimageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+                    kunaiuimageView.layer.shadowColor = UIColor.black.cgColor
+                    kunaiuimageView.layer.shadowOpacity = 1
+                    kunaiuimageView.layer.shadowOffset = CGSize.zero
+                    kunaiuimageView.layer.shadowRadius = 5
+                    kunaiuimageView.translatesAutoresizingMaskIntoConstraints = false
+                    
+                    
+                    let label = UILabel()
+                    label.numberOfLines = 1
+                    label.font = UIFont.boldSystemFont(ofSize: 30)
+                    label.textAlignment = .center
+                    label.textColor = UIColor.black
+                    label.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
+                    //        label.layer.shadowColor = UIColor.black.cgColor
+                    //        label.layer.shadowOpacity = 1
+                    //        label.layer.shadowOffset = CGSize.zero
+                    //        label.layer.shadowRadius = 5
+                    label.text = "Kunaiu"
+                    label.translatesAutoresizingMaskIntoConstraints = false
+                    
+                    let label2 = UILabel()
+                    label2.numberOfLines = 1
+                    label2.font = UIFont.boldSystemFont(ofSize: 26)
+                    label2.textAlignment = .center
+                    label2.textColor = UIColor.gray
+                    label2.frame = CGRect(x: 0, y: 0, width: 400, height: 30)
+                    //        label2.layer.shadowColor = UIColor.black.cgColor
+                    //        label2.layer.shadowOpacity = 1
+                    //        label2.layer.shadowOffset = CGSize.zero
+                    //        label2.layer.shadowRadius = 5
+                    label2.text = "@somone"
+                    label2.translatesAutoresizingMaskIntoConstraints = false
+                    
+                    let sView = UIView(frame: .init(x: 0, y: 0 , width: uiimage.size.width, height: uiimage.size.height))
+                    sView.translatesAutoresizingMaskIntoConstraints = false
+                    sView.backgroundColor = UIColor.white
+                    sView.addSubview(imageView)
+                    sView.addSubview(kunaiuimageView)
+                    sView.addSubview(label)
+                    sView.addSubview(label2)
+                    
+                    let minx = sView.bounds.minX
+                    let minY = sView.bounds.minY
+                    let maxX = sView.bounds.maxX
+                    let maxY = sView.bounds.maxY
+                    
+                    kunaiuimageView.center = CGPoint(x: sView.bounds.minX + kunaiuimageView.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height - 40)
+                    label.center = CGPoint(x: sView.bounds.minX + label.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height + label.frame.height)
+                    label2.center = CGPoint(x: sView.bounds.minX + label.frame.width, y: sView.bounds.maxY - kunaiuimageView.frame.height + label2.frame.height + 35)
+                    
+                    
+                    UIGraphicsBeginImageContextWithOptions(sView.frame.size, true, 0.0)
+                    if let context = UIGraphicsGetCurrentContext() { sView.layer.render(in: context) }
+                    let screenshotNew: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    
+                    guard let ima:UIImage = screenshotNew else {return}
+                    
+                    UIImageWriteToSavedPhotosAlbum(ima, self, #selector(self.savedImage), nil)
+                    
+                }else {
+                    
+                    let Index = self.currentPage
+                    if let url = self.images[Index].imageURL,
+                       let data = try? Data(contentsOf: url),
+                       let image = UIImage(data: data) {
+                        UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.savedImage), nil)
                     }
-                 }
+                    
+                }
+            }else if newStatus == PHAuthorizationStatus.denied {
+                DispatchQueue.main.async {
+                    let alertController = UIAlertController(title: "", message: "يتطلب صلاحيه من اجل حفظ الصور", preferredStyle: .alert)
+                    let OKAction = UIAlertAction(title: "الغاء", style: .cancel)
+                    alertController.addAction(OKAction)
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                }
+            }
         })
-    
-  }
+        
+    }
   
    @objc func savedImage(_ im:UIImage, error:Error?, context:UnsafeMutableRawPointer?) {
         if let err = error {
