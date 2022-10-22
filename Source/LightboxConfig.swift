@@ -9,6 +9,8 @@ public class LightboxConfig {
   public static var hideStatusBar = true
   public static var logoImage:UIImage?
   public static var isDrawing = false
+  public static var username = ""
+  public static var appname = ""
 
   /// Provide a closure to handle selected video
   public static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in

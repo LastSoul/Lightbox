@@ -459,8 +459,9 @@ extension LightboxController: HeaderViewDelegate {
                     //        label.layer.shadowOpacity = 1
                     //        label.layer.shadowOffset = CGSize.zero
                     //        label.layer.shadowRadius = 5
-                    label.text = "Kunaiu"
+                    label.text = LightboxConfig.appname
                     label.translatesAutoresizingMaskIntoConstraints = false
+                    
                     
                     let label2 = UILabel()
                     label2.numberOfLines = 1
@@ -472,7 +473,7 @@ extension LightboxController: HeaderViewDelegate {
                     //        label2.layer.shadowOpacity = 1
                     //        label2.layer.shadowOffset = CGSize.zero
                     //        label2.layer.shadowRadius = 5
-                    label2.text = "@somone"
+                    label2.text = LightboxConfig.username
                     label2.translatesAutoresizingMaskIntoConstraints = false
                     
                     let sView = UIView(frame: .init(x: 0, y: 0 , width: uiimage.size.width, height: uiimage.size.height))
