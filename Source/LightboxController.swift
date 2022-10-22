@@ -468,9 +468,9 @@ extension LightboxController: HeaderViewDelegate {
                         let label2 = UILabel()
                         label2.numberOfLines = 1
                         label2.font = UIFont.boldSystemFont(ofSize: 26)
-                        label2.textAlignment = .center
+                        label2.textAlignment = .left
                         label2.textColor = UIColor.gray
-                        label2.frame = CGRect(x: 0, y: 0, width: 400, height: 30)
+                        label2.frame = CGRect(x: 0, y: 0, width: 300, height: 30)
                         //        label2.layer.shadowColor = UIColor.black.cgColor
                         //        label2.layer.shadowOpacity = 1
                         //        label2.layer.shadowOffset = CGSize.zero
