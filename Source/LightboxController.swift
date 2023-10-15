@@ -502,12 +502,28 @@ extension LightboxController: HeaderViewDelegate {
                         
                     }else {
                         
-                        let Index = self.currentPage
-                        if let url = self.images[Index].imageURL,
-                           let data = try? Data(contentsOf: url),
-                           let image = UIImage(data: data) {
-                            UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.savedImage), nil)
+            let Index = self.currentPage
+            if let url = self.images[Index].imageURL {
+                if url.absoluteString.lowercased().hasSuffix(".gif") {
+                    if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                        PHPhotoLibrary.shared().performChanges {
+                            let creationRequest = PHAssetCreationRequest.forAsset()
+                            creationRequest.addResource(with: .photo, data: data, options: nil)
+                        } completionHandler: { success, error in
+                            if success {
+                            } else {
+                                if let error = error {
+                                    print("Error saving image: \(error.localizedDescription)")
+                                }
+                            }
                         }
+                    }
+                } else {
+                    if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                        UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.savedImage), nil)
+                    }
+                }
+            }
                         
                     }
                     
